@@ -1,0 +1,35 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block head %}
+<script>
+    let title = document.querySelector("#title").innerHTML;
+    title.value = "{{ title }}";
+</script>
+{% endblock head %}
+
+{% block body %}
+<form action={% url 'edit' title %} method="POST" >
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        {% comment %} <input type="text" class="form-control" id="title" name="title"> {% endcomment %}
+        <textarea class="form-control" id="title" name="title" rows="1">{{ title }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Content</label>
+        <textarea class="form-control" id="content" name="content" rows="3">{{ content }}</textarea>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+</form>
+
+
+{% endblock body %}
+
